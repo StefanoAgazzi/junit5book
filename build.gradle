@@ -5,7 +5,9 @@ plugins {
 group 'rocks.stefano.junit5book'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+
+sourceCompatibility = JavaVersion.VERSION_1_10
+targetCompatibility = JavaVersion.VERSION_1_10
 
 repositories {
     mavenCentral()
