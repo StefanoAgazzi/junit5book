@@ -27,13 +27,21 @@ class BookShelf {
     return books.stream().sorted(criteria).collect(Collectors.toList());
   }
 
-  public Map<Year, List<Book>> groupByPublicationYear() {
+  Map<Year, List<Book>> groupByPublicationYear() {
     return groupBy(book -> Year.of(book.getPublishedOn().getYear()));
   }
 
-  public <K> Map<K, List<Book>> groupBy(Function<Book, K> fx) {
+  <K> Map<K, List<Book>> groupBy(Function<Book, K> fx) {
     return books
             .stream()
             .collect(groupingBy(fx));
+  }
+
+  Progress progress() {
+    int booksRead = (int) books.stream().filter(Book::isRead).count();
+    int booksToRead = books.size() - booksRead;
+    int percentageCompleted = booksRead * 100 / books.size();
+    int percentageToRead = booksToRead * 100 / books.size();
+    return new Progress(percentageCompleted, percentageToRead, 0);
   }
 }

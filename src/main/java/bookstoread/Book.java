@@ -7,6 +7,8 @@ public class Book implements Comparable<Book> {
   private final String title;
   private final String author;
   private final LocalDate publishedOn;
+  private LocalDate startedReadingOn;
+  private LocalDate finishedReadingOn;
 
   Book(String title, String author, LocalDate publishedOn) {
     this.title = title;
@@ -18,11 +20,11 @@ public class Book implements Comparable<Book> {
     return title;
   }
 
-  public String getAuthor() {
+  String getAuthor() {
     return author;
   }
 
-  public LocalDate getPublishedOn() {
+  LocalDate getPublishedOn() {
     return publishedOn;
   }
 
@@ -53,5 +55,18 @@ public class Book implements Comparable<Book> {
   @Override
   public int hashCode() {
     return Objects.hash(title, author, publishedOn);
+  }
+
+  void startedReadingOn(LocalDate startedOn) {
+    this.startedReadingOn = startedOn;
+  }
+
+  void finishedReadingOn(LocalDate finishedOn) {
+    this.finishedReadingOn = finishedOn;
+  }
+
+  boolean isRead() {
+    return startedReadingOn != null &&
+            finishedReadingOn != null;
   }
 }

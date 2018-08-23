@@ -32,7 +32,7 @@ class BooksParameterResolver implements ParameterResolver {
                     JANUARY, 1)));
     books.put("Clean Code", new Book("Clean Code", "Robert C. Martin",
             LocalDate.of(2008, Month.AUGUST, 1)));
-    books.put("Refactoring: Improving the Design of Existing Code",
+    books.put("Refactoring",
             new Book("Refactoring: Improving the Design of Existing Code", "Martin Fowler",
                     LocalDate.of(2002, Month.MARCH, 9)));
     return books;
