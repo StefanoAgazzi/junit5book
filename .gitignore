@@ -478,6 +478,17 @@ fabric.properties
 *.gho
 *.ori
 *.orig
+### Maven template
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 ### Dropbox template
 # Dropbox settings and caches
 .dropbox
@@ -572,6 +583,18 @@ xcuserdata/
 *.xcscmblueprint
 *.xccheckout
 
+## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
+build/
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
 ### Java template
 # Compiled class file
 
@@ -620,6 +643,9 @@ jboss/server/minimal/work/**/*
 # deployed package files #
 
 *.DEPLOYED
+### Gradle template
+.gradle
+/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
