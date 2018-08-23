@@ -22,6 +22,8 @@ dependencies {
     def jUnitVersion = '5.2.0'
     def assertJVersion = '3.11.0'
 
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8'
+
     testCompile 'org.junit.jupiter:junit-jupiter-api:' + jUnitVersion
     testCompile 'org.junit.jupiter:junit-jupiter-engine:' + jUnitVersion
     testCompile 'org.assertj:assertj-core:' + assertJVersion

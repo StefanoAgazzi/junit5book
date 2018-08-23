@@ -1,11 +1,13 @@
 package bookstoread;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.Year;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 class BookShelf {
 
@@ -24,7 +26,7 @@ class BookShelf {
   }
 
   List<Book> arrange(Comparator<Book> criteria) {
-    return books.stream().sorted(criteria).collect(Collectors.toList());
+    return books.stream().sorted(criteria).collect(toList());
   }
 
   Map<Year, List<Book>> groupByPublicationYear() {
@@ -32,9 +34,7 @@ class BookShelf {
   }
 
   <K> Map<K, List<Book>> groupBy(Function<Book, K> fx) {
-    return books
-            .stream()
-            .collect(groupingBy(fx));
+    return books.stream().collect(groupingBy(fx));
   }
 
   Progress progress() {
@@ -43,5 +43,18 @@ class BookShelf {
     int percentageCompleted = booksRead * 100 / books.size();
     int percentageToRead = booksToRead * 100 / books.size();
     return new Progress(percentageCompleted, percentageToRead, 0);
+  }
+
+  List<Book> findBooksByTitle(String searchTerm) {
+    return books.stream()
+            .filter(s -> StringUtils.containsIgnoreCase(s.getTitle(), searchTerm))
+            .collect(toList());
+  }
+
+  List<Book> findBooksByTitle(String searchTerm, BookFilter filter) {
+    return books.stream()
+            .filter(s -> StringUtils.containsIgnoreCase(s.getTitle(), searchTerm))
+            .filter(b -> filter.apply(b))
+            .collect(toList());
   }
 }

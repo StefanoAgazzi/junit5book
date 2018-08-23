@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -150,6 +151,31 @@ class BookShelfSpec {
       assertThat(booksByAuthor)
               .containsKey("Robert C. Martin")
               .containsValues(singletonList(cleanCode));
+    }
+  }
+
+
+  @Nested
+  @DisplayName("search")
+  class BookShelfSearchSpec {
+    @BeforeEach
+    void setup() {
+      shelf.add(codeComplete, effectiveJava, mythicalManMonth, cleanCode);
+    }
+
+    @Test
+    @DisplayName("should find books with title containing text")
+    void shouldFindBooksWithTitleContainingText() {
+      List<Book> books = shelf.findBooksByTitle("code");
+      assertThat(books.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName(" should find books with title containing text and published after specified date")
+    void shouldFilterSearchedBooksBasedOnPublishedDate() {
+      List<Book> books = shelf.findBooksByTitle("code", b ->
+              b.getPublishedOn().isBefore(LocalDate.of(2006, 12, 31)));
+      assertThat(books.size()).isEqualTo(1);
     }
   }
 
