@@ -5,6 +5,7 @@ jdk:
 
 # see https://blog.travis-ci.com/2014-12-17-faster-builds-with-container-based-infrastructure
 sudo: false
+install: true
 
 matrix:
   include:
@@ -17,4 +18,14 @@ matrix:
 cache:
   directories:
   - $HOME/.m2
+  - $HOME/.m2/repository
+  - $HOME/.sonar/cache
   - $HOME/.gradle
+  - .gradle
+
+addons:
+  sonarcloud:
+    organization: "stefanorocks"
+script:
+  # other script steps might be done before running the actual analysis
+- sonar-scanner

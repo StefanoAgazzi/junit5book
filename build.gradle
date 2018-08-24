@@ -1,12 +1,14 @@
 plugins {
     id 'java'
     id "org.sonarqube" version "2.6"
+
 }
 
 group 'rocks.stefano.junit5book'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'maven'
 
 compileJava   {
@@ -27,4 +29,11 @@ dependencies {
     testCompile 'org.junit.jupiter:junit-jupiter-api:' + jUnitVersion
     testCompile 'org.junit.jupiter:junit-jupiter-engine:' + jUnitVersion
     testCompile 'org.assertj:assertj-core:' + assertJVersion
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "junit5book"
+        property "sonar.projectKey", "rocks.stefano.junit5book"
+    }
 }
