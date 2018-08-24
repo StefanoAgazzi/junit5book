@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id "org.sonarqube" version "2.6"
+    id "org.sonarqube" version "2.6.2"
 
 }
 
@@ -35,5 +35,6 @@ sonarqube {
     properties {
         property "sonar.projectName", "junit5book"
         property "sonar.projectKey", "rocks.stefano.junit5book"
+        property "sonar.host.url", "https://sonarcloud.io"
     }
 }
