@@ -29,4 +29,5 @@ cache:
   - .gradle
 
 script:
+- ./gradlew build --scan -s
 - sonar-scanner
