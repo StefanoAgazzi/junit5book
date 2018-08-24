@@ -33,5 +33,6 @@ cache:
   - .gradle
 
 script:
+- ./gradlew dependencyCheckAnalyze
 - ./gradlew build --scan -s
 - sonar-scanner
