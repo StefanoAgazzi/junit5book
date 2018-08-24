@@ -19,6 +19,9 @@ addons:
     token:
       secure: "RcwGFAvKz4dZxAxsxFF1iJUcI1VH/ZGW4wjpPE096r8VPLCq3Kqq1hRRBcmYe33fZr7XRBjrWT9V9kUvmLJl2K+sMLbrEdQwOKTTgr1IGyyZ5GEN1/Lvazkv/XCC6y7h0fQ6aeZSGd30cCMB5WcjGqk9ZjmvleQKSby0Nrl20TMoCbDnFj0aKzroAr6hC94KaMnsjb1k4LCGfE5KF2TwWo/6fREDnIkNLr3NqUenepMx0oIX42sgdeuyZJHkuIxwdghbezpGtL5BGajYqfRtwzMjovImXpR8Jm69ehhvkx8H4o/nz3D1RcVokACzmePMzsSIJRbw7vMPokNZd2ZvAOLUaEr1SU7X0U/hIK2wm5OlLcNV3l9fNxGd19MoIW1RE83Ov8PBECmUh9cd8ti2VgQviuAhP7mAhGcn1A7a+kx138UVU4+MelEi9suZh9QLlzSQHKJeD5B/Wh0qhwAggl5xHm05vi23VEJM2tXMMSTDppeoC5mmAFZOevNszFTPNdzb3MMCXIsjEdDx4ojwvlyL5dNnE2hsx6SDLtvcjB8ubdRXMUTGutkIeSrbEGwucRJC27O8FxE1eBntzcquhcmsxAEa6lIs8K/ZgpSvhjtbOFAoV0F/XwAxVUeIXqyR14C+DOQuf0caLEFFf0nqMm5chHpxrBu5npSVHECHkVQ="
 
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 # cache the build tool's caches
 cache:
