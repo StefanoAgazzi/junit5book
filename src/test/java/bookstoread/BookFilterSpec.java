@@ -1,9 +1,12 @@
 package bookstoread;
 
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,7 +25,19 @@ class BookFilterSpec {
 
   @Nested
   @DisplayName("book published date")
-  class BookPulishedFilterSpec {
+  class BookPublishedFilterSpec implements FilterBoundaryTests {
+    BookFilter filter;
+
+    @BeforeEach
+    void init() {
+      filter = BookPublishedYearFilter.after(2007);
+    }
+
+    @Override
+    public BookFilter get() {
+      return filter;
+    }
+
     @Test
     @DisplayName("is after specified year")
     void validateBookPublishedDatePostAskedYear() {
@@ -42,29 +57,47 @@ class BookFilterSpec {
     }
 
     @Test
-    @DisplayName("composite criteria is based on multiple filters")
+    @DisplayName("Composite criteria invokes multiple filters")
     void shouldFilterOnMultiplesCriteria() {
       CompositeFilter compositeFilter = new CompositeFilter();
-      compositeFilter.addFilter(b -> false);
+      final Map<Integer, Boolean> invocationMap = new HashMap<>();
+      compositeFilter.addFilter(b -> {
+        invocationMap.put(1, false);
+        return false;
+      });
       assertFalse(compositeFilter.apply(cleanCode));
     }
 
     @Test
-    @DisplayName("composite criteria does not invoke after first failure")
-    void shouldNotInvokeAfterFirstFailure(){
+    @DisplayName("Composite criteria does not invoke after first failure")
+    void shouldNotInvokeAfterFirstFailure() {
       CompositeFilter compositeFilter = new CompositeFilter();
-      compositeFilter.addFilter( b -> false);
-      compositeFilter.addFilter( b -> true);
+      BookFilter invokedMockedFilter = Mockito.mock(BookFilter.class);
+      Mockito.when(invokedMockedFilter.apply(cleanCode)).thenReturn(false);
+      compositeFilter.addFilter(invokedMockedFilter);
+      BookFilter nonInvokedMockedFilter = Mockito.mock(BookFilter.class);
+      Mockito.when(nonInvokedMockedFilter.apply(cleanCode)).thenReturn(true);
+      compositeFilter.addFilter(nonInvokedMockedFilter);
       assertFalse(compositeFilter.apply(cleanCode));
+      Mockito.verify(invokedMockedFilter).apply(cleanCode);
+      Mockito.verifyZeroInteractions(nonInvokedMockedFilter);
     }
 
     @Test
-    @DisplayName("composite criteria invokes all filters")
-    void shouldInvokeAllFilters(){
+    @DisplayName("Composite criteria invokes all filters")
+    void shouldInvokeAllFilters() {
       CompositeFilter compositeFilter = new CompositeFilter();
-      compositeFilter.addFilter( b -> true);
-      compositeFilter.addFilter( b -> true);
+      BookFilter firstInvokedMockedFilter = Mockito.mock(BookFilter.class);
+      Mockito.when(firstInvokedMockedFilter.apply(cleanCode)).
+              thenReturn(true);
+      compositeFilter.addFilter(firstInvokedMockedFilter);
+      BookFilter secondInvokedMockedFilter = Mockito.mock(BookFilter.class);
+      Mockito.when(secondInvokedMockedFilter.apply(cleanCode)).
+              thenReturn(true);
+      compositeFilter.addFilter(secondInvokedMockedFilter);
       assertTrue(compositeFilter.apply(cleanCode));
+      Mockito.verify(firstInvokedMockedFilter).apply(cleanCode);
+      Mockito.verify(secondInvokedMockedFilter).apply(cleanCode);
     }
   }
 }

@@ -15,6 +15,8 @@ class BookPublishedYearFilter implements BookFilter {
   // maybe accepting a Function as bookstoread.BookShelf.groupBy
   @Override
   public boolean apply(final Book b) {
+    if (b == null)
+      return false;
     return b.getPublishedOn().isAfter(startDate);
   }
 }
