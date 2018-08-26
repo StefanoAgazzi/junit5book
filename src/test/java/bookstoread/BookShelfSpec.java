@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Bookshelf")
 @ExtendWith(BooksParameterResolver.class)
+@ExtendWith(LoggingTestExecutionExceptionHandler.class)
 class BookShelfSpec {
 
   private BookShelf shelf;
@@ -66,6 +67,13 @@ class BookShelfSpec {
       assertEquals(2, books.size(), () -> "BookShelf should have two books.");
     }
 
+    @Test
+    void throwsExceptionWhenBooksAreAddedAfterCapacityIsReached() {
+      BookShelf bookShelf = new BookShelf(2);
+      bookShelf.add(effectiveJava, codeComplete);
+      BusinessException throwException = assertThrows(BusinessException.class, () -> bookShelf.add(mythicalManMonth));
+      assertEquals("BookShelf capacity of 2 is reached. You can't add more books.", throwException.getMessage());
+    }
 
     @Test
     @DisplayName("returned books must be immutable")

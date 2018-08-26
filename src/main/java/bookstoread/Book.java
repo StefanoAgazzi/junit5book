@@ -1,5 +1,7 @@
 package bookstoread;
 
+import com.google.common.base.MoreObjects;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -34,15 +36,6 @@ public class Book implements Comparable<Book> {
   }
 
   @Override
-  public String toString() {
-    return "Book{" +
-            "title='" + title + '\'' +
-            ", author='" + author + '\'' +
-            ", publishedOn=" + publishedOn +
-            '}';
-  }
-
-  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -68,5 +61,17 @@ public class Book implements Comparable<Book> {
   boolean isRead() {
     return startedReadingOn != null &&
             finishedReadingOn != null;
+  }
+
+  @Override
+  public String toString() {
+    final MoreObjects.ToStringHelper helper = MoreObjects.toStringHelper("Book")
+            .add("title", title)
+            .add("author", author)
+            .add("publishedOn", publishedOn)
+            .add("startedReadingOn", startedReadingOn)
+            .add("finishedReadingOn", finishedReadingOn);
+
+    return helper.toString();
   }
 }

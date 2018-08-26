@@ -12,13 +12,26 @@ import static java.util.stream.Collectors.toList;
 class BookShelf {
 
   private final List<Book> books = new ArrayList<>();
+  private int capacity = 10;
+
+  BookShelf(int capacity) {
+    this.capacity = capacity;
+  }
+
+  BookShelf() {
+  }
 
   List<Book> books() {
     return Collections.unmodifiableList(books);
   }
 
-  void add(Book... bookToAdd) {
-    Arrays.stream(bookToAdd).forEach(books::add);
+  void add(Book... booksToAdd) throws BusinessException {
+    Arrays.stream(booksToAdd).forEach(book -> {
+      if (books.size() == capacity) {
+        throw new BusinessException(ErrorCode.MAXIMUM_CAPACITY_REACHED, String.format("BookShelf capacity of %d is reached. You can't add more books.", this.capacity));
+      }
+      books.add(book);
+    });
   }
 
   List<Book> arrange() {
