@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.owasp:dependency-check-gradle:3.3.1'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
     }
 }
 
@@ -16,6 +17,7 @@ group 'rocks.stefano.junit5book'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'org.owasp.dependencycheck'
+apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'maven'
@@ -25,7 +27,7 @@ apply plugin: 'signing'
 apply plugin: 'build-dashboard'
 */
 
-compileJava   {
+compileJava {
     sourceCompatibility = JavaVersion.VERSION_1_10
     targetCompatibility = JavaVersion.VERSION_1_10
 }
@@ -46,6 +48,12 @@ dependencies {
     testCompile 'org.junit.jupiter:junit-jupiter-engine:' + jUnitVersion
     testCompile 'org.assertj:assertj-core:' + assertJVersion
     testCompile 'org.mockito:mockito-core:2.+'
+}
+
+junitPlatform {
+    filters {
+        includeClassNamePattern '.*Spec'
+    }
 }
 
 sonarqube {
